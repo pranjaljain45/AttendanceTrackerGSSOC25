@@ -269,7 +269,7 @@ if (isset($_SESSION['admin_id'])) {
                                 class="block mb-2 text-sm font-semibold text-gray-800 dark:text-gray-200">Confirm
                                 Password</label>
                             <div class="relative">
-                                <input type="password" name="Re-password" id="re-password" placeholder="••••••••"
+                                <input type="password" name="confirm-password" id="confirm-password" placeholder="••••••••"
                                     class="password-input bg-white/70 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-3 dark:bg-gray-800/70 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white/90 placeholder:text-gray-500/80 transition-all duration-200"
                                     required />
                                 <svg class="toggle-password absolute right-3 top-3 cursor-pointer w-5 h-5 text-gray-600 dark:text-gray-400"
