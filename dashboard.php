@@ -202,7 +202,7 @@ if (!isset($_SESSION['user_id'])) {
         </div>
     </div>
 
-    <!-- Subject setting form -->
+  <!-- Subject setting form -->
     <div id="subjects-modal" tabindex="-1" aria-hidden="true"
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-black bg-opacity-50 backdrop-blur-sm">
         <div class="relative p-4 w-full max-w-lg max-h-full">
@@ -226,7 +226,7 @@ if (!isset($_SESSION['user_id'])) {
                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+ 
                         </svg>
                         <span class="sr-only">Close modal</span>
                     </button>
@@ -286,74 +286,79 @@ if (!isset($_SESSION['user_id'])) {
                 `;
                     subjectContainer.appendChild(div);
 
+
                     // Add event listener for the new remove button
                     div.querySelector('.remove-subject-btn').addEventListener('click', function () {
                         div.remove();
                     });
                 }
+              
+                // Add event listener for the new remove button
+                div.querySelector('.remove-subject-btn').addEventListener('click', function() {
+                    div.remove();
+                    updateFormValidation();
 
-                // Add initial subject field
-                // You can modify this to preload existing subjects from your PHP `subjects` array if needed
-                // For example:
-                // <?php if (!empty($subjects)) { ?>
-                    //     <?php foreach ($subjects as $s) { ?>
-                        //         createSubjectField('<?= $s['subject_name'] ?>', '<?= $s['total_classes'] ?>'); // Assuming 'total_classes' is the column name
-                        //     <?php } ?>
-                    // <?php } else { ?>
-                    //     createSubjectField(); // Add one empty field if no subjects exist
-                    // <?php } ?>
-                // For now, let's just add one empty field to start if the container is empty.
-                if (subjectContainer.children.length === 0) {
-                    createSubjectField(); // Start with one field
-                }
-
-
-                // Event listener for "Add New Subject" button
-                addSubjectBtn.addEventListener('click', function () {
-                    createSubjectField();
                 });
+            }
+            // Make sure there's at least one subject field at all times
+            function updateFormValidation() {
+                // If there are no fields, add one automatically
+                if (subjectContainer.children.length === 0) {
+                    createSubjectField();
+                    alert("At least one subject is required.");
+                }
+            }
+
+            // Add initial subject field if none exists
+            if (subjectContainer.children.length === 0) {
+                createSubjectField(); // Start with one field
+            }
+           
+            // Event listener for "Add New Subject" button
+            addSubjectBtn.addEventListener('click', function() {
+                createSubjectField();
+                // Scroll to the bottom of the container to show the new field
+                subjectContainer.scrollTop = subjectContainer.scrollHeight;
             });
-        </script>
-        <style>
-            /* Custom scrollbar for the subject container */
-            .custom-scrollbar::-webkit-scrollbar {
-                width: 8px;
-            }
 
-            .custom-scrollbar::-webkit-scrollbar-track {
-                background: #f1f1f1;
-                border-radius: 10px;
-            }
-
-            .custom-scrollbar::-webkit-scrollbar-thumb {
-                background: #cbd5e1;
-                /* gray-300 */
-                border-radius: 10px;
-            }
-
-            .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                background: #94a3b8;
-                /* gray-400 */
-            }
-
-            /* Dark mode scrollbar */
-            .dark .custom-scrollbar::-webkit-scrollbar-track {
-                background: #1f2937;
-                /* gray-800 */
-            }
-
-            .dark .custom-scrollbar::-webkit-scrollbar-thumb {
-                background: #4b5563;
-                /* gray-600 */
-            }
-
-            .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                background: #6b7280;
-                /* gray-500 */
-            }
-        </style>
-    </div>
-
+            // Form submission validation
+            document.getElementById('subject_form').addEventListener('submit', function(e) {
+                if (subjectContainer.children.length === 0) {
+                    e.preventDefault();
+                    alert("Please add at least one subject before saving.");
+                    createSubjectField();
+                }
+            });
+        });
+    </script>
+    <style>
+        /* Custom scrollbar for the subject container */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1; /* gray-300 */
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; /* gray-400 */
+        }
+        /* Dark mode scrollbar */
+        .dark .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1f2937; /* gray-800 */
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #4b5563; /* gray-600 */
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #6b7280; /* gray-500 */
+        }
+    </style>
+</div>
 
     <?php
     include "includes/script.php";

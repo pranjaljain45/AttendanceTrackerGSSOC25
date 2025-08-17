@@ -5,10 +5,12 @@ $name = $_POST['name'];
 $email = $_POST['email'];
 $password = $_POST['password'];
 $re_password = $_POST['confirm-password'];
-if ($password != $re_password) {
-    echo json_encode(array("success" => false, "message" => "Password not matched!"));
-    exit;
-} else {
+
+if($password != $re_password){
+echo json_encode(array("success"=> false, "message"=> "Password not matched!"));
+exit;
+}
+else {
     $password = sha1($password);
     $sql = "SELECT * FROM users where email = '$email'";
     $result = mysqli_query($conn, $sql);
